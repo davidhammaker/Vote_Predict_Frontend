@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getCookie } from './cookieFunctions';
+import { getCookie, setCookie } from './cookieFunctions';
 
 
 let backendUrl = process.env.REACT_APP_BACKEND;
@@ -18,7 +18,7 @@ export default class AxiosUtils {
     const config = {headers: {'X-CSRFToken': getCookie('csrftoken')}};
     axios.post(`${backendUrl}api-token-auth/`, data, config)
     .then((response) => {
-      document.cookie = `token=${response.data['token']}`;
+      setCookie('token', response.data['token']);
       success(response);
     })
     .catch(
