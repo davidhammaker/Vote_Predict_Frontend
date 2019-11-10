@@ -13,7 +13,7 @@ export default function Home() {
         <h6 className="row">
           {!token && (
             <>
-              <div className="col-sm p-4"><a className="text-muted text-decoration-none" href="/">Sign&nbsp;Up</a></div>
+              <div className="col-sm p-4"><a className="text-muted text-decoration-none" href="/signup">Sign&nbsp;Up</a></div>
               <div className="col-sm p-4"><a className="text-muted text-decoration-none" href="/login">Log&nbsp;In</a></div>
             </>
           )}
