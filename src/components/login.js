@@ -17,7 +17,7 @@ export default function Login() {
   }
 
   const loginSuccess = (response) => {
-    // Utils.navigateTo('/');
+    Utils.navigateTo('/');
     console.log(response.data['token']);
     setErrorMessage('');
   }
