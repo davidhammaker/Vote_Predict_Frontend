@@ -4,6 +4,7 @@ import Home from './components/home';
 import SignUp from './components/signup';
 import Login from './components/login';
 import Logout from './components/logout';
+import About from './components/about';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Route path="/signup" component={ SignUp } />
       <Route path="/login" component={ Login } />
       <Route path="/logout" component={ Logout } />
+      <Route path="/about" component={ About } />
     </Router>
   );
 }

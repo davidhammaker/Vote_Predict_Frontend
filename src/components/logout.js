@@ -11,8 +11,8 @@ export default function Logout() {
           Logged Out
         </h3>
         <div className="row">
-        <div className="col-sm p-4"><a className="text-muted text-decoration-none" href="/">Home</a></div>
-            <div className="col-sm p-4"><a className="text-muted text-decoration-none" href="/login">Log&nbsp;In</a></div>
+          <div className="col-sm p-4"><a className="text-muted text-decoration-none" href="/">Home</a></div>
+          <div className="col-sm p-4"><a className="text-muted text-decoration-none" href="/login">Log&nbsp;In</a></div>
         </div>
       </div>
     </div>
