@@ -60,6 +60,7 @@ export default function Login() {
             <div className="d-flex justify-content-end">
               <input type="submit" value="Submit" className="btn btn-secondary mt-3" />
             </div>
+            <div className="text-muted col-sm p-4 text-center">Need an account? <a className="text-muted text-decoration-none" href="/signup">SIGN&nbsp;UP</a></div>
           </form>
         </div>
       </div>

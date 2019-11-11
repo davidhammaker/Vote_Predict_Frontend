@@ -142,6 +142,7 @@ export default function SignUp() {
             <div className="d-flex justify-content-end">
               <input type="submit" value="Submit" className="btn btn-secondary mt-3" />
             </div>
+            <div className="text-muted col-sm p-4 text-center">Already have an account? <a className="text-muted text-decoration-none" href="/login">LOG&nbsp;IN</a></div>
           </form>
         </div>
       </div>
