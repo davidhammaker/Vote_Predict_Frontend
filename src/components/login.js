@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axiosUtils from './utils/axiosUtils';
+import AxiosUtils from './utils/axiosUtils';
 import Utils from './utils/generalUtils';
 
 
@@ -27,7 +27,7 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axiosUtils.login(username, password, loginSuccess, loginFailure);
+    AxiosUtils.login(username, password, loginSuccess, loginFailure);
   }
 
   return (

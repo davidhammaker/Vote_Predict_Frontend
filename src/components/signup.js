@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axiosUtils from './utils/axiosUtils';
+import AxiosUtils from './utils/axiosUtils';
 import Utils from './utils/generalUtils';
 
 
@@ -35,7 +35,7 @@ export default function SignUp() {
     setPasswordError('');
     setConfirmPasswordError('');
     const loginSuccess = () => Utils.navigateTo('/');
-    axiosUtils.login(username, password, loginSuccess);
+    AxiosUtils.login(username, password, loginSuccess);
   }
 
   const signupFailure = (errors) => {
@@ -81,7 +81,7 @@ export default function SignUp() {
       setConfirmPasswordError('');
     }
     if (!errors) {
-      axiosUtils.signUp(username, email, password, signupSuccess, signupFailure);
+      AxiosUtils.signUp(username, email, password, signupSuccess, signupFailure);
     }
   }
 
