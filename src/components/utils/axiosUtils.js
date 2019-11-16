@@ -19,6 +19,7 @@ export default class AxiosUtils {
     axios.post(`${backendUrl}api-token-auth/`, data, config)
     .then((response) => {
       setCookie('token', response.data['token']);
+      setCookie('username', username);
       if (successCallback) {
         successCallback(response);
       }

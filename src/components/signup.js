@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AxiosUtils from './utils/axiosUtils';
 import Utils from './utils/generalUtils';
+import NavBar from './navbar';
 
 
 export default function SignUp() {
@@ -86,66 +87,91 @@ export default function SignUp() {
   }
 
   return (
-    <div className="d-flex align-items-center min-vh-100">
-      <div className="container">
-        <h3 className="color-very-light font-weight-bold text-center mb-3">
-          Sign Up
-        </h3>
-        <div className="row">
-          <form onSubmit={ handleSubmit } className="p-4 col-md-4 mx-auto">
-            <div className="form-group mb-0">
-              <label className="text-muted">Username:</label>
-              <input
-                type="text"
-                value={ username }
-                onChange={ handleUsernameChange }
-                className="form-control" />
-            </div>
-            
-            <div className="text-center">
-              <small style={{color: "#f00", textAlign: "center"}}>{ usernameError }</small>
-            </div>
-            <div className="form-group mb-0 mt-4">
-              <label className="text-muted">Email Address:</label>
-              <input
-                type="text"
-                value={ email }
-                onChange={ handleEmailChange }
-                className="form-control" />
-            </div>
-            
-            <div className="text-center">
-              <small style={{color: "#f00", textAlign: "center"}}>{ emailError }</small>
-            </div>
-            <div className="form-group mb-0 mt-4">
-              <label className="text-muted">Password:</label>
-              <input
-                type="password"
-                value={ password }
-                onChange={ handlePasswordChange }
-                className="form-control" />
-            </div>
-            <div className="text-center">
-              <small style={{color: "#f00", textAlign: "center"}}>{ passwordError }</small>
-            </div>
-            <div className="form-group mb-0 mt-4">
-              <label className="text-muted">Confirm password:</label>
-              <input
-                type="password"
-                value={ confirmPassword }
-                onChange={ handleConfirmPasswordChange }
-                className="form-control" />
-            </div>
-            <div className="text-center">
-              <small style={{color: "#f00", textAlign: "center"}}>{ confirmPasswordError }</small>
-            </div>
-            <div className="d-flex justify-content-end">
-              <input type="submit" value="Submit" className="btn btn-secondary mt-3" />
-            </div>
-            <div className="text-muted col-sm p-4 text-center">Already have an account? <a className="text-muted text-decoration-none" href="/login">LOG&nbsp;IN</a></div>
-          </form>
+    <>
+      <NavBar />
+      <div className="d-flex align-items-center min-vh-100 centralized">
+        <div className="container">
+          <h3 className="color-very-light font-weight-bold text-center mb-3">
+            Sign Up
+          </h3>
+          <div className="row">
+            <form onSubmit={ handleSubmit } className="p-4 col-md-4 mx-auto">
+              <div className={"form-group mb-0"}>
+                <label className="text-muted">Username:</label>
+                <input
+                  type="text"
+                  value={ username }
+                  onChange={ handleUsernameChange }
+                  className="form-control" />
+              </div>
+              <div className="text-center">
+                <small style={{color: "#f00", textAlign: "center"}}>
+                  { usernameError }
+                </small>
+              </div>
+
+              <div className={!usernameError ? "form-group mb-0 mt-4" : "form-group mb-0"}>
+                <label className="text-muted">Email Address:</label>
+                <input
+                  type="text"
+                  value={ email }
+                  onChange={ handleEmailChange }
+                  className="form-control" />
+              </div>
+              <div className="text-center">
+                <small style={{color: "#f00", textAlign: "center"}}>
+                  { emailError }
+                </small>
+              </div>
+
+              <div className={!emailError ? "form-group mb-0 mt-4" : "form-group mb-0"}>
+                <label className="text-muted">Password:</label>
+                <input
+                  type="password"
+                  value={ password }
+                  onChange={ handlePasswordChange }
+                  className="form-control" />
+              </div>
+              <div className="text-center">
+                <small style={{color: "#f00", textAlign: "center"}}>
+                  { passwordError }
+                </small>
+              </div>
+
+              <div className={!passwordError ? "form-group mb-0 mt-4" : "form-group mb-0"}>
+                <label className="text-muted">Confirm password:</label>
+                <input
+                  type="password"
+                  value={ confirmPassword }
+                  onChange={ handleConfirmPasswordChange }
+                  className="form-control" />
+              </div>
+              <div className="text-center">
+                <small style={{color: "#f00", textAlign: "center"}}>
+                  { confirmPasswordError }
+                </small>
+              </div>
+
+              <div className="d-flex justify-content-end">
+                <input
+                type="submit"
+                value="Submit"
+                className={!passwordError ? "btn standard-btn mt-3" : "btn standard-btn mt-1"}
+                />
+              </div>
+              <div className="text-muted col-sm p-4 text-center">
+                Already have an account? 
+                <a
+                  className="text-decoration-none"
+                  href="/login"
+                  >
+                    LOG&nbsp;IN
+                </a>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }

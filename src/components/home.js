@@ -13,14 +13,14 @@ export default function Home() {
         <h6 className="row">
           {!token && (
             <>
-              <div className="col-sm p-4"><a className="text-muted text-decoration-none" href="/signup">Sign&nbsp;Up</a></div>
-              <div className="col-sm p-4"><a className="text-muted text-decoration-none" href="/login">Log&nbsp;In</a></div>
+              <div className="col-sm p-4"><a className="text-decoration-none" href="/signup">Sign&nbsp;Up</a></div>
+              <div className="col-sm p-4"><a className="text-decoration-none" href="/login">Log&nbsp;In</a></div>
             </>
           )}
           {token && (
-            <div className="col-sm p-4"><a className="text-muted text-decoration-none" href="/logout">Log&nbsp;Out</a></div>
+            <div className="col-sm p-4"><a className="text-decoration-none" href="/logout">Log&nbsp;Out</a></div>
           )}
-          <div className="col-sm p-4"><a className="text-muted text-decoration-none" href="/about">Where&nbsp;am&nbsp;I?</a></div>
+          <div className="col-sm p-4"><a className="text-decoration-none" href="/about">Where&nbsp;am&nbsp;I?</a></div>
         </h6>
       </div>
     </div>
