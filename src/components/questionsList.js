@@ -23,7 +23,7 @@ export default function QuestionsList() {
 
   const token = getCookie('token');
   if (!token) {
-    Utils.navigateTo(Urls.login());
+    Utils.navigateTo(Urls.login(), {next: 'questions'});
   }
   
   return (

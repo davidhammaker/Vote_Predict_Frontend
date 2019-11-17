@@ -18,9 +18,14 @@ export default function Login() {
     setPassword(e.target.value);
   }
 
-  const loginSuccess = (response) => {
-    Utils.navigateTo(Urls.home());
-    console.log(response.data['token']);
+  const loginSuccess = () => {
+    const parameters = Utils.getQueryParameters();
+    if (parameters['next'] === 'questions') {
+      Utils.navigateTo(Urls.questions());
+    }
+    else {
+      Utils.navigateTo(Urls.home());
+    }
     setErrorMessage('');
   }
   const loginFailure = () => {
