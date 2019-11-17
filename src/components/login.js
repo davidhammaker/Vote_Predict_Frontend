@@ -3,6 +3,7 @@ import Urls from '../urls';
 import AxiosUtils from './utils/axiosUtils';
 import Utils from './utils/generalUtils';
 import NavBar from './navbar';
+import Message from './message';
 
 
 export default function Login() {
@@ -42,6 +43,7 @@ export default function Login() {
       <NavBar />
       <div className="d-flex align-items-center min-vh-100 centralized">
         <div className="container">
+          <Message />
           <h3 className="color-very-light font-weight-bold text-center mb-3">
             Log In
           </h3>

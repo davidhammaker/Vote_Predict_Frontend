@@ -45,3 +45,7 @@ a:hover {
 .centralized {
   margin-top: -60px;
 }
+
+.alert {
+  margin-top: 60px;
+}
