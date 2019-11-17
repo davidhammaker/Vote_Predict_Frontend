@@ -42,14 +42,19 @@ export default function QuestionsList() {
               </h2>
               {questions && (
                 questions.map((question) => {
-                  return (
-                    <div key={question.id}>
-                      <h3><a href="#" className="text-decoration-none">
-                        { question.content }
-                      </a></h3>
-                      <br />
-                    </div>
-                  )
+                  if (
+                    (new Date(question.date_concluded)) >= (new Date())
+                    && (new Date(question.date_published)) <= (new Date())
+                    ) {
+                    return (
+                      <div key={question.id}>
+                        <h3><a href="#" className="text-decoration-none">
+                          { question.content }
+                        </a></h3>
+                        <br />
+                      </div>
+                    )
+                  }
                 })
               )}
             </div>
