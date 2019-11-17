@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Urls from '../urls';
 import AxiosUtils from './utils/axiosUtils';
 import Utils from './utils/generalUtils';
 import NavBar from './navbar';
@@ -18,7 +19,7 @@ export default function Login() {
   }
 
   const loginSuccess = (response) => {
-    Utils.navigateTo('/');
+    Utils.navigateTo(Urls.home());
     console.log(response.data['token']);
     setErrorMessage('');
   }
@@ -67,7 +68,12 @@ export default function Login() {
                   className={!errorMessage ? "btn standard-btn mt-3" : "btn standard-btn mt-1"}
                   />
               </div>
-              <div className="text-muted col-sm p-4 text-center">Need an account? <a className="text-decoration-none" href="/signup">SIGN&nbsp;UP</a></div>
+              <div className="text-muted col-sm p-4 text-center">
+                Need an account?{' '}
+                <a className="text-decoration-none" href={ Urls.signup() }>
+                  SIGN&nbsp;UP
+                </a>
+              </div>
             </form>
           </div>
         </div>

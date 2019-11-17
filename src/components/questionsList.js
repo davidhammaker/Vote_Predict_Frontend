@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Urls from '../urls';
 import NavBar from './navbar';
 import { getCookie } from './utils/cookieFunctions';
 import AxiosUtils from './utils/axiosUtils';
@@ -22,7 +23,7 @@ export default function QuestionsList() {
 
   const token = getCookie('token');
   if (!token) {
-    Utils.navigateTo('/login');
+    Utils.navigateTo(Urls.login());
   }
   
   return (

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Urls from '../urls';
 import AxiosUtils from './utils/axiosUtils';
 import Utils from './utils/generalUtils';
 import NavBar from './navbar';
@@ -35,7 +36,7 @@ export default function SignUp() {
     setEmailError('');
     setPasswordError('');
     setConfirmPasswordError('');
-    const loginSuccess = () => Utils.navigateTo('/');
+    const loginSuccess = () => Utils.navigateTo(Urls.home());
     AxiosUtils.login(username, password, loginSuccess);
   }
 
@@ -160,10 +161,10 @@ export default function SignUp() {
                 />
               </div>
               <div className="text-muted col-sm p-4 text-center">
-                Already have an account? 
+                Already have an account?{' '}
                 <a
                   className="text-decoration-none"
-                  href="/login"
+                  href={ Urls.login() }
                   >
                     LOG&nbsp;IN
                 </a>

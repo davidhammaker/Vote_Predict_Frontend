@@ -1,4 +1,5 @@
 import React from 'react';
+import Urls from '../urls';
 import NavBar from './navbar';
 
 
@@ -19,7 +20,7 @@ export default function About() {
             </div>
           </div>
           <div className="row">
-            <div className="col-sm p-4"><a className="text-decoration-none" href="/">Home</a></div>
+            <div className="col-sm p-4"><a className="text-decoration-none" href={ Urls.home() }>Home</a></div>
           </div>
         </div>
       </div>
