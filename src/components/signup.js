@@ -91,7 +91,7 @@ export default function SignUp() {
   return (
     <>
       <NavBar />
-      <div className="d-flex align-items-center min-vh-100 centralized">
+      <div className="d-flex align-items-center min-vh-100 centralized" id="signUp">
         <div className="container">
           <Message />
           <h3 className="color-very-light font-weight-bold text-center mb-3">
