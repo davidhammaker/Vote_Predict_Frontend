@@ -7,26 +7,38 @@ import AxiosUtils from './utils/axiosUtils';
 import Utils from './utils/generalUtils';
 
 
-export default function QuestionsList() {
-  let [questions, setQuestions] = useState([]);
+export default function QuestionDetail() {
+  let [question, setQuestion] = useState([]);
+  let [answers, setAnswers] = useState([]);
   let [firstLoad, setFirstLoad] = useState(true);
+  let [needAnswers, setNeedAnswers] = useState(true);
 
   if (firstLoad) {
     // Updating state within the axios callback causes an infinite
     // loop. To prevent this, we explicitly call the function only
     // on the when the page is first loaded.
     setFirstLoad(false);
+    const id = Utils.getPathParameters(Urls.questions('<id>'))['id'];
     const successCallback = (response) => {
-      setQuestions(response.data);
+      setQuestion(response.data);
     };
-    AxiosUtils.getQuestions(successCallback);
+    AxiosUtils.getQuestionDetail(id, successCallback);
+  }
+
+  if (needAnswers) {
+    setNeedAnswers(false);
+    const id = Utils.getPathParameters(Urls.questions('<id>'))['id'];
+    const successCallback = (response) => {
+      setAnswers(response.data);
+    };
+    AxiosUtils.getQuestionAnswers(id, successCallback);
   }
 
   const token = getCookie('token');
   if (!token) {
     setCookie('message', 'You must log in first.');
     setCookie('alertContext', 'alert-info');
-    Utils.navigateTo(Urls.login(), {next: Urls.questions()});
+    Utils.navigateTo(Urls.login(), {next: Urls.here()});
   }
   
   return (
@@ -37,26 +49,14 @@ export default function QuestionsList() {
           <div className="d-flex align-items-center min-vh-100 centralized">
             <div className="container text-center">
               <Message />
-              <h2 className="color-very-light font-weight-bold mb-5">
-                <span className="title-style">Question</span>s
+              <h2 className="question-style color-very-light font-weight-bold mb-5">
+                { question['content'] }
               </h2>
-              {questions && (
-                questions.map((question) => {
-                  if (
-                    (new Date(question.date_concluded)) >= (new Date())
-                    && (new Date(question.date_published)) <= (new Date())
-                    ) {
-                    return (
-                      <div key={question.id}>
-                        <h3><a href={ Urls.questions(question.id) } className="text-decoration-none">
-                          { question.content }
-                        </a></h3>
-                        <br />
-                      </div>
-                    );
-                  }
-                  return null;
-                })
+              {(answers.length !== 0) && (
+                <>
+                  <button className="btn answer-button first-button">{answers[0]['content']}</button>
+                  <button className="btn answer-button second-button">{answers[1]['content']}</button>
+                </>
               )}
             </div>
           </div>

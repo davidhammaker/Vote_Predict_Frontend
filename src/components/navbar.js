@@ -14,13 +14,13 @@ export default function NavBar() {
           <a className="nav-link" href={ Urls.home() }>Home</a>
         </li>
         <li className="navbar-item">
-          <span className="nav-link disabled" >|</span>
+          <span className="nav-link disabled no-mobile" >|</span>
         </li>
         <li className="navbar-item">
           <a className="nav-link" href={ Urls.about() }>About</a>
         </li>
         <li className="navbar-item">
-          <span className="nav-link disabled" >|</span>
+          <span className="nav-link disabled no-mobile" >|</span>
         </li>
         {!token && (
           <li className="navbar-item">

@@ -21,8 +21,8 @@ export default function Login() {
 
   const loginSuccess = () => {
     const parameters = Utils.getQueryParameters();
-    if (parameters['next'] === 'questions') {
-      Utils.navigateTo(Urls.questions());
+    if (parameters['next']) {
+      Utils.navigateTo(parameters['next']);
     }
     else {
       Utils.navigateTo(Urls.home());

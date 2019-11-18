@@ -1,4 +1,7 @@
 export default class Urls {
+  static here() {
+    return window.location.pathname;
+  }
   static home() {
     return "/";
   };
@@ -14,7 +17,10 @@ export default class Urls {
   static about() {
     return "/about";
   };
-  static questions() {
+  static questions(id) {
+    if (id) {
+      return `/questions/${id}`;
+    }
     return "/questions";
   };
 }

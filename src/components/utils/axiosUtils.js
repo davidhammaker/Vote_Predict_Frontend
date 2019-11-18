@@ -80,4 +80,50 @@ export default class AxiosUtils {
       }
     );
   }
+
+  static getQuestionDetail(id, successCallback = null, failureCallback = null) {
+    /**
+     * Retrieves a single Question.
+     * @param {int} id The Question ID.
+     * @param {function} successCallback Callback function on success.
+     * @param {function} failureCallback Callback function on failure.
+     */
+    // const id = Utils.getPathParameters(Urls.questions('<id>'))['id'];
+    axios.get(`${backendUrl}questions/${id}/`)
+    .then((response) => {
+      if (successCallback) {
+        successCallback(response);
+      }
+    })
+    .catch(
+      (errors) => {
+        if (failureCallback) {
+          failureCallback(errors);
+        }
+      }
+    );
+  }
+
+  static getQuestionAnswers(id, successCallback = null, failureCallback = null) {
+    /**
+     * Retrieves Answers to a Question.
+     * @param {int} id The Question ID.
+     * @param {function} successCallback Callback function on success.
+     * @param {function} failureCallback Callback function on failure.
+     */
+    // const id = Utils.getPathParameters(Urls.questions('<id>'))['id'];
+    axios.get(`${backendUrl}questions/${id}/answers/`)
+    .then((response) => {
+      if (successCallback) {
+        successCallback(response);
+      }
+    })
+    .catch(
+      (errors) => {
+        if (failureCallback) {
+          failureCallback(errors);
+        }
+      }
+    );
+  }
 }

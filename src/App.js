@@ -7,6 +7,7 @@ import Login from './components/login';
 import Logout from './components/logout';
 import About from './components/about';
 import QuestionsList from './components/questionsList';
+import QuestionDetail from './components/questionDetail';
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
       <Route path={ Urls.login() } component={ Login } />
       <Route path={ Urls.logout() } component={ Logout } />
       <Route path={ Urls.about() } component={ About } />
-      <Route path={ Urls.questions() } component={ QuestionsList } />
+      <Route exact path={ Urls.questions() } component={ QuestionsList } />
+      <Route path={ Urls.questions() } component={ QuestionDetail } />
     </Router>
   );
 }

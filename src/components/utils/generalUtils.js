@@ -24,7 +24,7 @@ export default class Utils {
 
   static getQueryParameters() {
     /**
-     * Retrieves query parameters from the current URL.
+     * Returns query parameters from the current URL.
      * @return {obj} An object with all parameters and values.
      */
     if (window.location.href.indexOf('?') !== -1) {
@@ -39,5 +39,28 @@ export default class Utils {
       return parameterObject;
     }
     return {}
+  }
+
+  static getPathParameters(pathFormat) {
+    /**
+     * Returns parameters contained in a URL path.
+     * @param {str} pathFormat The format of the path from which
+     *  parameters can be parsed. Parameters should be designated by a
+     *  name with surrounding carats.
+     * @return {obj} An object with all parameters and values.
+     */
+    let parameterObject = {};
+    let pathFormatArray = pathFormat.split('/');
+    let pathArray = window.location.pathname.split('/');
+    for (let i = 0; i < pathFormatArray.length; i += 1) {
+      if (pathArray[i] !== pathFormatArray[i]) {
+        const key = pathFormatArray[i].slice(
+          1, pathFormatArray[i].length - 1
+        );
+        const value = pathArray[i];
+        parameterObject[key] = value;
+      }
+    }
+    return parameterObject;
   }
 }

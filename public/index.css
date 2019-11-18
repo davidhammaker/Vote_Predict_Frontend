@@ -30,16 +30,10 @@ a:hover {
   line-height: 2em;
 }
 
-@media screen and (max-width: 480px) {
-  .title-style {
-    letter-spacing: 0.6em;
-  }
-}
-
-@media screen and (max-width: 340px) {
-  .title-style {
-    letter-spacing: 0.2em;
-  }
+.question-style {
+  letter-spacing: 0.2em;
+  word-spacing: 0.2em;
+  line-height: 2em;
 }
 
 .centralized {
@@ -48,4 +42,58 @@ a:hover {
 
 .alert {
   margin-top: 60px;
+}
+
+.answer-button {
+  width: 25em;
+  margin: 1em;
+}
+
+.first-button {
+  color: #fff;
+  background-color: #2d5ca3;
+}
+
+.first-button:hover {
+  color: #fff;
+  background-color: #4193ce;
+}
+
+.first-button:active {
+  background-color: #a5d3f5;
+}
+
+.second-button {
+  color: #fff;
+  background-color: #a32d64;
+}
+
+.second-button:hover {
+  color: #fff;
+  background-color: #ce417c;
+}
+
+.second-button:active {
+  background-color: #f5a5ca;
+}
+
+@media screen and (max-width: 575px) {
+  .no-mobile {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .title-style {
+    letter-spacing: 0.6em;
+  }
+  .answer-button {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 340px) {
+  .title-style {
+    letter-spacing: 0.2em;
+  }
 }
