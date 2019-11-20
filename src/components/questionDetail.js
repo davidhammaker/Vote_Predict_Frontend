@@ -1,67 +1,84 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Urls from '../urls';
 import NavBar from './navbar';
 import Message from './message';
-import { getCookie, setCookie } from './utils/cookieFunctions';
+import { getCookie } from './utils/cookieFunctions';
 import AxiosUtils from './utils/axiosUtils';
 import Utils from './utils/generalUtils';
 
 
-export default function QuestionDetail() {
+export default function QuestionDetail(props) {
   let [question, setQuestion] = useState([]);
   let [answers, setAnswers] = useState([]);
-  let [firstLoad, setFirstLoad] = useState(true);
-  let [needAnswers, setNeedAnswers] = useState(true);
+  let [error, setError] = useState(false)
 
-  if (firstLoad) {
-    // Updating state within the axios callback causes an infinite
-    // loop. To prevent this, we explicitly call the function only
-    // on the when the page is first loaded.
-    setFirstLoad(false);
-    const id = Utils.getPathParameters(Urls.questions('<id>'))['id'];
-    const successCallback = (response) => {
-      setQuestion(response.data);
-    };
-    AxiosUtils.getQuestionDetail(id, successCallback);
-  }
+  useEffect(
+    () => {
+      const id = Utils.getPathParameters(Urls.questionDetail('<id>'))['id'];
 
-  if (needAnswers) {
-    setNeedAnswers(false);
-    const id = Utils.getPathParameters(Urls.questions('<id>'))['id'];
-    const successCallback = (response) => {
-      setAnswers(response.data);
-    };
-    AxiosUtils.getQuestionAnswers(id, successCallback);
-  }
+      const questionSuccess = (response) => {
+        setQuestion(response.data);
+      };
+      const questionFailure = () => {
+        setError(true);
+      }
+      AxiosUtils.getQuestionDetail(id, questionSuccess, questionFailure);
+
+      const answerSuccess = (response) => {
+        setAnswers(response.data);
+      };
+      AxiosUtils.getQuestionAnswers(id, answerSuccess);
+    },
+    [props.source],
+  );
 
   const token = getCookie('token');
-  if (!token) {
-    setCookie('message', 'You must log in first.');
-    setCookie('alertContext', 'alert-info');
-    Utils.navigateTo(Urls.login(), {next: Urls.here()});
-  }
   
   return (
     <>
-      {token && (
-        <>
-          <NavBar />
-          <div className="d-flex align-items-center min-vh-100 centralized">
-            <div className="container text-center">
-              <Message />
-              <h2 className="question-style color-very-light font-weight-bold mb-5">
-                { question['content'] }
-              </h2>
-              {(answers.length !== 0) && (
-                <>
-                  <button className="btn answer-button first-button">{answers[0]['content']}</button>
-                  <button className="btn answer-button second-button">{answers[1]['content']}</button>
-                </>
-              )}
-            </div>
-          </div>
-        </>
-      )}
+      <NavBar />
+      <div className="d-flex align-items-center min-vh-100 centralized">
+        <div className="container text-center">
+          {error && (
+            <>
+              <h3 className="question-style text-secondary">404 - Not Found</h3>
+              <p className="text-secondary">The question you are looking for does not exist.</p>
+              <h6 className="row">
+                <div className="col-sm p-4"><a className="text-decoration-none" href={Urls.home()}>Return Home</a></div>
+              </h6>
+            </>
+          )}
+          {!error && (
+            <>
+            {!token && (
+              <div className="alert alert-info text-center">
+                <a
+                  className="force-anchor-inverse"
+                  onClick={
+                    () => Utils.navigateTo(Urls.login(), {next: Urls.here()})
+                  }
+                >
+                LOG IN</a> to view this content.
+              </div>
+            )}
+            {token && (
+              <>
+                  <Message />
+                  <h2 className="question-style color-very-light font-weight-bold mb-5">
+                    { question['content'] }
+                  </h2>
+                  {(answers.length !== 0) && (
+                    <>
+                      <button className="btn answer-button first-button">{answers[0]['content']}</button>
+                      <button className="btn answer-button second-button">{answers[1]['content']}</button>
+                    </>
+                  )}
+              </>
+            )}
+            </>
+          )}
+        </div>
+      </div>
     </>
   );
 }

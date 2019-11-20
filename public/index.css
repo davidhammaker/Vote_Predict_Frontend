@@ -6,6 +6,30 @@ a:hover {
   color: #657fa7;
 }
 
+a.force-anchor {
+  color: #689fc7!important;
+  font-weight: bold;
+}
+
+a.force-anchor:hover {
+  color: #657fa7!important;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+a.force-anchor-inverse {
+  color: #657fa7!important;
+  font-weight: bold;
+}
+
+a.force-anchor-inverse:hover {
+  color: #689fc7!important;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
 .standard-btn {
   color: #fff;
   background-color: #657fa7;

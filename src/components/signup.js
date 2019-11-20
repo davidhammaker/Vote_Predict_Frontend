@@ -42,7 +42,6 @@ export default function SignUp() {
   }
 
   const signupFailure = (errors) => {
-    console.log(errors.response.data);
     for (let error in errors.response.data) {
       if (error === 'username') {
         setUsernameError('That username is already in use.');

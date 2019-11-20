@@ -17,10 +17,13 @@ export default class Urls {
   static about() {
     return "/about";
   };
-  static questions(id) {
-    if (id) {
-      return `/questions/${id}`;
-    }
+  static questions() {
     return "/questions";
   };
+  static questionDetail(id) {
+    if (id) {
+      return `/question/${id}`;
+    }
+    return "/question";
+  }
 }

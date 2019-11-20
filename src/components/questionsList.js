@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Urls from '../urls';
 import NavBar from './navbar';
 import Message from './message';
@@ -7,20 +7,18 @@ import AxiosUtils from './utils/axiosUtils';
 import Utils from './utils/generalUtils';
 
 
-export default function QuestionsList() {
+export default function QuestionsList(props) {
   let [questions, setQuestions] = useState([]);
-  let [firstLoad, setFirstLoad] = useState(true);
 
-  if (firstLoad) {
-    // Updating state within the axios callback causes an infinite
-    // loop. To prevent this, we explicitly call the function only
-    // on the when the page is first loaded.
-    setFirstLoad(false);
-    const successCallback = (response) => {
-      setQuestions(response.data);
-    };
-    AxiosUtils.getQuestions(successCallback);
-  }
+  useEffect(
+    () => {
+      const successCallback = (response) => {
+        setQuestions(response.data);
+      };
+      AxiosUtils.getQuestions(successCallback);
+    },
+    [props.source],
+  );
 
   const token = getCookie('token');
   if (!token) {
@@ -48,7 +46,7 @@ export default function QuestionsList() {
                     ) {
                     return (
                       <div key={question.id}>
-                        <h3><a href={ Urls.questions(question.id) } className="text-decoration-none">
+                        <h3><a href={ Urls.questionDetail(question.id) } className="text-decoration-none">
                           { question.content }
                         </a></h3>
                         <br />

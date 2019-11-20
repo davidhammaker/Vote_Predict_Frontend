@@ -111,7 +111,6 @@ export default class AxiosUtils {
      * @param {function} successCallback Callback function on success.
      * @param {function} failureCallback Callback function on failure.
      */
-    // const id = Utils.getPathParameters(Urls.questions('<id>'))['id'];
     axios.get(`${backendUrl}questions/${id}/answers/`)
     .then((response) => {
       if (successCallback) {

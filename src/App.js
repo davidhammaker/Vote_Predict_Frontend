@@ -8,8 +8,10 @@ import Logout from './components/logout';
 import About from './components/about';
 import QuestionsList from './components/questionsList';
 import QuestionDetail from './components/questionDetail';
+import Utils from './components/utils/generalUtils';
 
 function App() {
+  const questionId = Utils.getPathParameters(Urls.questionDetail('questionId'))['questionId'];
   return (
     <Router>
       <Route exact path={ Urls.home() } component={ Home } />
@@ -18,7 +20,7 @@ function App() {
       <Route path={ Urls.logout() } component={ Logout } />
       <Route path={ Urls.about() } component={ About } />
       <Route exact path={ Urls.questions() } component={ QuestionsList } />
-      <Route path={ Urls.questions() } component={ QuestionDetail } />
+      <Route path={ Urls.questionDetail(questionId) } component={ QuestionDetail } />
     </Router>
   );
 }
