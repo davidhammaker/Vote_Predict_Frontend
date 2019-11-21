@@ -44,6 +44,11 @@ a.force-anchor-inverse:hover {
   background-color: #a5d3f5;
 }
 
+.standard-btn:disabled {
+  color: #fff;
+  background-color: #657fa7;
+}
+
 .color-very-light {
   color: #d4d4d4;
 }

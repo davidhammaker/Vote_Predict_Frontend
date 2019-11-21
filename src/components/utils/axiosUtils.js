@@ -125,4 +125,40 @@ export default class AxiosUtils {
       }
     );
   }
+
+  static postReply(reply, successCallback = null, failureCallback = null) {
+    /**
+     * Posts a Question Reply to the backend.
+     * @param {obj} reply The Question Reply in the following format:
+     *  {
+     *   question: <question id>,
+     *   vote: <voted answer id>,
+     *   prediction: <predicted answer id>
+     *  }
+     * @param {function} successCallback Callback function on success.
+     * @param {function} failureCallback Callback function on failure.
+     */
+    axios.post(
+      `${backendUrl}questions/${reply['question']}/reply/`,
+      reply,
+      {
+        headers: {
+          'X-CSRFToken': `${getCookie('csrftoken')}`,
+          'Authorization': `Token ${getCookie('token')}`
+        }
+      }
+    )
+    .then((response) => {
+      if (successCallback) {
+        successCallback(response);
+      }
+    })
+    .catch(
+      (errors) => {
+        if (failureCallback) {
+          failureCallback(errors);
+        }
+      }
+    );
+  }
 }

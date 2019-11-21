@@ -8,9 +8,16 @@ import Utils from './utils/generalUtils';
 
 
 export default function QuestionDetail(props) {
-  let [question, setQuestion] = useState([]);
-  let [answers, setAnswers] = useState([]);
-  let [error, setError] = useState(false)
+  const [question, setQuestion] = useState([]);
+  const [answers, setAnswers] = useState([]);
+  const [error, setError] = useState(false)
+  const [reply, setReply] = useState({
+    question: question['id'],
+    vote: null,
+    prediction: null
+  })
+  const [vote, setVote] = useState(null);
+  const [prediction, setPrediction] = useState(null);
 
   useEffect(
     () => {
@@ -32,8 +39,38 @@ export default function QuestionDetail(props) {
     [props.source],
   );
 
+  const castVote = (id, content) => {
+    setReply({
+      question: question['id'],
+      vote: id,
+      prediction: null
+    });
+    setVote(content);
+  }
+
+  const castPrediction = (id, content) => {
+    setReply({
+      question: question['id'],
+      vote: reply['vote'],
+      prediction: id
+    });
+    setPrediction(content);
+  }
+
+  const sendReply = () => {
+    const replySuccess = () => {
+      Utils.navigateTo(Urls.questions());
+    }
+
+    const replyFailure = (error) => {
+      console.log(error.response);
+    }
+
+    AxiosUtils.postReply(reply, replySuccess, replyFailure);
+  }
+
   const token = getCookie('token');
-  
+
   return (
     <>
       <NavBar />
@@ -69,8 +106,84 @@ export default function QuestionDetail(props) {
                   </h2>
                   {(answers.length !== 0) && (
                     <>
-                      <button className="btn answer-button first-button">{answers[0]['content']}</button>
-                      <button className="btn answer-button second-button">{answers[1]['content']}</button>
+                      {!reply['vote'] && (
+                        <>
+                          <button
+                            className="btn answer-button first-button"
+                            onClick={() => {
+                              castVote(answers[0]['id'], answers[0]['content'])
+                            }}
+                          >
+                            {answers[0]['content']}
+                          </button>
+                          <button
+                            className="btn answer-button second-button"
+                            onClick={() => {
+                              castVote(answers[1]['id'], answers[1]['content'])
+                            }}
+                          >
+                            {answers[1]['content']}
+                          </button>
+                        </>
+                      )}
+                      {reply['vote'] && (
+                        <>
+                          <h4 className="text-secondary">You voted:</h4>
+                          <button
+                            className="btn standard-btn"
+                            disabled
+                          >
+                            {vote}
+                          </button>
+                          <br />
+                          <br />
+                        </>
+                      )}
+                      {(reply['vote'] && !reply['prediction']) && (
+                        <>
+                          <h3 className="text-secondary">Now, which answer will be more popular?</h3>
+                          <br />
+                          <button
+                            className="btn answer-button first-button"
+                            onClick={() => {
+                              castPrediction(answers[0]['id'], answers[0]['content'])
+                            }}
+                          >
+                            {answers[0]['content']}
+                          </button>
+                          <button
+                            className="btn answer-button second-button"
+                            onClick={() => {
+                              castPrediction(answers[1]['id'], answers[1]['content'])
+                            }}
+                          >
+                            {answers[1]['content']}
+                          </button>
+                        </>
+                      )}
+                      {reply['prediction'] && (
+                        <>
+                          <h4 className="text-secondary">You predicted:</h4>
+                          <button
+                            className="btn standard-btn"
+                            disabled
+                          >
+                            {prediction}
+                          </button>
+                          <br />
+                          <br />
+                        </>
+                      )}
+                      {(reply['vote'] && reply['prediction']) && (
+                        <button
+                          className="btn standard-btn"
+                          onClick={() => {
+                            sendReply()
+                          }}
+                        >
+                          Send your response
+                        </button>
+                      )}
                     </>
                   )}
               </>
