@@ -18,25 +18,48 @@ export default function QuestionDetail(props) {
   })
   const [vote, setVote] = useState(null);
   const [prediction, setPrediction] = useState(null);
+  const [existingReply, setExistingReply] = useState(false);
+  const [gotAnswers, setGotAnswers] = useState(false);
+  const [gotReply, setGotReply] = useState(false);
 
   useEffect(
     () => {
       const id = Utils.getPathParameters(Urls.questionDetail('<id>'))['id'];
 
-      const questionSuccess = (response) => {
-        setQuestion(response.data);
-      };
-      const questionFailure = () => {
-        setError(true);
-      }
-      AxiosUtils.getQuestionDetail(id, questionSuccess, questionFailure);
+      if (!gotAnswers) {
+        const questionSuccess = (response) => {
+          setQuestion(response.data);
+        };
+        const questionFailure = () => {
+          setError(true);
+        }
+        AxiosUtils.getQuestionDetail(id, questionSuccess, questionFailure);
 
-      const answerSuccess = (response) => {
-        setAnswers(response.data);
-      };
-      AxiosUtils.getQuestionAnswers(id, answerSuccess);
+        const answerSuccess = (response) => {
+          setAnswers(response.data);
+          setGotAnswers(true);
+        };
+        AxiosUtils.getQuestionAnswers(id, answerSuccess);
+      }
+
+      if (gotAnswers && !gotReply) {
+        const getReplySuccess = (response) => {
+          setExistingReply(true);
+          answers.map((answer) => {
+            if (answer['id'] === response.data['vote']) {
+              setVote(answer['content']);
+            }
+            if (answer['id'] === response.data['prediction']) {
+              setPrediction(answer['content']);
+            }
+          });
+          setGotReply(true);
+        }
+        const getReplyFailure = () => setGotReply(true);
+        AxiosUtils.getReply(id, getReplySuccess, getReplyFailure);
+      }
     },
-    [props.source],
+    [props.source, gotAnswers, gotReply, answers],
   );
 
   const castVote = (id, content) => {
@@ -104,7 +127,7 @@ export default function QuestionDetail(props) {
                   <h2 className="question-style color-very-light font-weight-bold mb-5">
                     { question['content'] }
                   </h2>
-                  {(answers.length !== 0) && (
+                  {(!existingReply && answers.length !== 0) && (
                     <>
                       {!reply['vote'] && (
                         <>
@@ -126,7 +149,7 @@ export default function QuestionDetail(props) {
                           </button>
                         </>
                       )}
-                      {reply['vote'] && (
+                      {(reply['vote'] && !reply['prediction']) && (
                         <>
                           <h4 className="text-secondary">You voted:</h4>
                           <button
@@ -137,10 +160,6 @@ export default function QuestionDetail(props) {
                           </button>
                           <br />
                           <br />
-                        </>
-                      )}
-                      {(reply['vote'] && !reply['prediction']) && (
-                        <>
                           <h3 className="text-secondary">Now, which answer will be more popular?</h3>
                           <br />
                           <button
@@ -161,29 +180,62 @@ export default function QuestionDetail(props) {
                           </button>
                         </>
                       )}
-                      {reply['prediction'] && (
+                      {(reply['vote'] && reply['prediction']) && (
                         <>
-                          <h4 className="text-secondary">You predicted:</h4>
+                          <div className="row">
+                            <div className="col-sm p-4">
+                              <h4 className="text-secondary">You&nbsp;voted:</h4>
+                              <button
+                                className="btn standard-btn"
+                                disabled
+                              >
+                              {vote}
+                              </button>
+                            </div>
+                            <div className="col-sm p-4">
+                              <h4 className="text-secondary">You&nbsp;predicted:</h4>
+                              <button
+                                className="btn standard-btn"
+                                disabled
+                              >
+                              {prediction}
+                              </button>
+                            </div>
+                          </div>
+                          <button
+                            className="btn standard-btn"
+                            onClick={() => {
+                              sendReply()
+                            }}
+                          >
+                            Send your response
+                          </button>
+                        </>
+                      )}
+                    </>
+                  )}
+                  {existingReply && (
+                    <>
+                      <div className="row">
+                        <div className="col-sm p-4">
+                          <h4 className="text-secondary">You&nbsp;voted:</h4>
                           <button
                             className="btn standard-btn"
                             disabled
                           >
-                            {prediction}
+                          {vote}
                           </button>
-                          <br />
-                          <br />
-                        </>
-                      )}
-                      {(reply['vote'] && reply['prediction']) && (
-                        <button
-                          className="btn standard-btn"
-                          onClick={() => {
-                            sendReply()
-                          }}
-                        >
-                          Send your response
-                        </button>
-                      )}
+                        </div>
+                        <div className="col-sm p-4">
+                          <h4 className="text-secondary">You&nbsp;predicted:</h4>
+                          <button
+                            className="btn standard-btn"
+                            disabled
+                          >
+                          {prediction}
+                          </button>
+                        </div>
+                      </div>
                     </>
                   )}
               </>
